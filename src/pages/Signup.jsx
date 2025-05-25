@@ -1,3 +1,4 @@
+// src/pages/Signup.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
@@ -27,20 +28,34 @@ const Signup = () => {
     setLoading(true);
     setError(null);
 
-    try {
-      const result = await signUpNewUser(email, password, name);
+      const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        return passwordRegex.test(password);
+      };
 
-      if (result.success) {
-        navigate("/login");
-      } else {
-        setError(result.error.message);
+      if (!validatePassword(password)) {
+        setLoading(false);
+        setError(
+          "Password must be at least 8 characters long and include at least one number and one special character."
+        );
+        return;
       }
-    } catch {
-      setError("An unexpected error occurred.");
-    } finally {
-      setLoading(false);
-    }
-  };
+
+
+      try {
+        const result = await signUpNewUser(email, password, name);
+
+        if (result.success) {
+          navigate("/login");
+        } else {
+          setError(result.error.message);
+        }
+      } catch {
+        setError("An unexpected error occurred.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <Box
@@ -108,11 +123,12 @@ const Signup = () => {
             fullWidth
             disabled={loading}
             startIcon={loading && <CircularProgress size={20} />}
+            sx={{ mt: 1 }}
           >
             {loading ? "Signing up..." : "Sign Up"}
           </Button>
 
-          <Typography variant="body2" textAlign="center">
+          <Typography variant="body2" textAlign="center" sx={{ mt: 1 }}>
             Already have an account?{" "}
             <MuiLink component={Link} to="/login" underline="hover">
               Sign in

@@ -19,17 +19,17 @@ export const AuthContextProvider = ({ children }) => {
       return { success: false, error };
     }
 
-    // Insert user profile info (name) into your 'profiles' table
-    const userId = data.user.id;
+    // // Insert user profile info (name) into your 'profiles' table
+    // const userId = data.user.id;
 
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert([{ id: userId, name }]); // assuming 'id' is the user id
+    // const { error: profileError } = await supabase
+    //   .from("users")
+    //   .insert([{ id: userId, name }]); // assuming 'id' is the user id
 
-    if (profileError) {
-      console.error("Error inserting profile:", profileError);
-      return { success: false, error: profileError };
-    }
+    // if (profileError) {
+    //   console.error("Error inserting profile:", profileError);
+    //   return { success: false, error: profileError };
+    // }
 
     return { success: true, data };
   };
