@@ -39,7 +39,6 @@ export default function NavBarBottom({ onAddTaskClick }) {
           left: "50%",
           transform: "translateX(-50%)",
           width: "100%",
-          maxWidth: 600,
           zIndex: 1200,
         }}
       >
@@ -60,7 +59,7 @@ export default function NavBarBottom({ onAddTaskClick }) {
                 onClick={onAddTaskClick}
                 sx={{
                   position: "absolute",
-                  top: -30,
+                  top: -20,
                   left: "50%",
                   transform: "translateX(-50%)",
                   zIndex: 1300,

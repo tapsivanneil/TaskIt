@@ -107,10 +107,21 @@ function Home() {
 
   return (
     <>
+      <Box sx={{
+        minHeight: "100vh",
+        width: "100%",
+        background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
+        display: "flex",
+        padding: 2
+
+      }}>
+
       <NavBar />
 
-      <Container maxWidth="md" sx={{ mt: 10, mb: 10 }}>
-
+      <Container maxWidth="md" sx={{ 
+        mt: 10,
+        mb: 10, 
+      }}>
         {loading ? (
           <Box display="flex" justifyContent="center" mt={4}>
             <CircularProgress />
@@ -195,6 +206,8 @@ function Home() {
       </Container>
 
       <NavBarBottom onAddTaskClick={handleOpen} />
+      
+      </Box>
     </>
   );
 }
