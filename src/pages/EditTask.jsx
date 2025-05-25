@@ -227,7 +227,12 @@ function EditTask() {
         </Box>
 
         <NavBarBottom/>
-
+        <Box sx={{
+          marginBottom: 10,
+          height: 10,
+          
+        }}>
+        </Box>
       </Container>
     </>
   );
