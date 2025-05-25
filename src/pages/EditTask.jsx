@@ -83,16 +83,15 @@ function EditTask() {
 
       updatedImagePath = data.path;
 
-      // Optional: update media table if you track images separately
-      const { error: dbError } = await supabase.from("media").insert([
+      const { error: dbError } = await supabase.from("images").insert([
         {
-          user_id: taskInfo.userid,
+          uuid: taskInfo.userid,
           file_path: updatedImagePath,
         },
       ]);
 
       if (dbError) {
-        console.error("Error saving to media table:", dbError);
+        console.error("Error saving to images table:", dbError);
       }
     }
 
@@ -116,22 +115,19 @@ function EditTask() {
       setResponseStatus("Error updating task");
     } else {
       setResponseStatus("Task updated successfully!");
+      navigate("/home"); // redirect after success (optional)
     }
   };
 
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" sx={{ mt: 10}}>
+      <Container maxWidth="sm" sx={{ mt: 10 }}>
         <Box
-          component="form"
-          onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
-          {/* Display current image */}
           <TaskImage imagePath={taskInfo.data.image} />
 
-          {/* Upload new image */}
           <Button variant="outlined" component="label">
             Upload New Image
             <input
@@ -171,9 +167,7 @@ function EditTask() {
                   onClick={() => setTaskStatus("todo")}
                   startIcon={<RadioButtonUncheckedIcon />}
                 >
-                  <Typography sx={{ fontSize: '10px' }}>
-                      Todo
-                  </Typography>
+                  <Typography sx={{ fontSize: "10px" }}>Todo</Typography>
                 </Button>
               </Tooltip>
               <Tooltip title="In Progress">
@@ -183,9 +177,7 @@ function EditTask() {
                   onClick={() => setTaskStatus("in-progress")}
                   startIcon={<HourglassEmptyIcon />}
                 >
-                  <Typography sx={{ fontSize: '10px' }}>
-                      In Progress
-                  </Typography>
+                  <Typography sx={{ fontSize: "10px" }}>In Progress</Typography>
                 </Button>
               </Tooltip>
               <Tooltip title="Completed">
@@ -195,44 +187,33 @@ function EditTask() {
                   onClick={() => setTaskStatus("completed")}
                   startIcon={<CheckCircleIcon />}
                 >
-                  <Typography sx={{ fontSize: '10px' }}>
-                      Completed
-                  </Typography>
+                  <Typography sx={{ fontSize: "10px" }}>Completed</Typography>
                 </Button>
               </Tooltip>
             </ButtonGroup>
           </Box>
 
-        </Box>
-
-        <Box sx={{ }}>
           <SubTask taskInfo={taskInfo} />
           <AddSubTask task={taskInfo} />
+
+          {responseStatus && (
+            <Typography
+              mt={2}
+              color={responseStatus.includes("Error") ? "error" : "success.main"}
+            >
+              {responseStatus}
+            </Typography>
+          )}
+
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 2 }}>
+            <Button onClick={handleSubmit} variant="contained" disabled={loading}>
+              {loading ? <CircularProgress size={24} /> : "Update Task"}
+            </Button>
+          </Box>
         </Box>
 
-        {responseStatus && (
-          <Typography
-            mt={2}
-            color={responseStatus.includes("Error") ? "error" : "success.main"}
-          >
-            {responseStatus}
-          </Typography>
-        )}
-
-
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 2, width: "100%", mb: 10 }}>
-          <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? <CircularProgress size={24} /> : "Update Task"}
-          </Button>
-        </Box>
-
-        <NavBarBottom/>
-        <Box sx={{
-          marginBottom: 10,
-          height: 10,
-          
-        }}>
-        </Box>
+        <NavBarBottom />
+        <Box sx={{ marginBottom: 10, height: 10 }} />
       </Container>
     </>
   );

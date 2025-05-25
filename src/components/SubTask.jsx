@@ -89,7 +89,6 @@ function SubTask({ taskInfo }) {
             width: {
               xs: "100%"
             },
-            gap: 1,
           }}
         >
           <ListItemText
