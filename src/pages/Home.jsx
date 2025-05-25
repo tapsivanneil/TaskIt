@@ -108,12 +108,10 @@ function Home() {
   return (
     <>
       <Box sx={{
-        minHeight: "100vh",
         width: "100%",
         background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
         display: "flex",
-        padding: 2
-
+        height: "1000px"
       }}>
 
       <NavBar />
@@ -129,6 +127,7 @@ function Home() {
         ) : tasks.length > 0 ? (
           <>
             <Box component="form" onSubmit={handleSearchSubmit} sx={{ mb: 3 }}>
+              
             <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
               <TextField
                 label="Search tasks"
@@ -138,6 +137,9 @@ function Home() {
                 onChange={(e) => setSearch(e.target.value)}
                 sx={{ flexGrow: 1 }}
               />
+
+
+              <SortByMenu onHandleSort={handleSortChange} />
 
               <Button
                 type="submit"
@@ -155,9 +157,13 @@ function Home() {
                 <SearchIcon />
               </Button>
 
-              <SortByMenu onHandleSort={handleSortChange} />
+              
             </Stack>
-            <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
+            <Box sx={{mb: 10, justifyContent: "center", alignItems: "center", margin: "auto"}}>
+              <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
+            </Box>
+
+            
           </Box>
           </>
 

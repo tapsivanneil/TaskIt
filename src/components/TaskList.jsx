@@ -12,35 +12,44 @@ function TaskList({ tasks, onTaskDeleted }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // sm = 600px and below
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: isMobile ? "column" : "row", // column for mobile, row for desktop
-        flexWrap: isMobile ? "nowrap" : "wrap",     // no wrapping on mobile
-        gap: 2,
-        justifyContent: isMobile ? "center" : "flex-start",
-        alignItems: isMobile ? "center" : "stretch",
-        marginBottom: 10,
-      }}
-    >
-      {tasks.map((task) => (
-        <Box
-          key={task.id}
-          sx={{
-            flex: isMobile ? "1 1 auto" : "1 1 100%", // full width row on desktop
-            minWidth: isMobile ? 0 : 370,
-            width: isMobile ? "100%" : "auto",
-          }}
-        >
-          {isMobile ? (
-            <Task taskInfo={task} onTaskDeleted={onTaskDeleted} />
-          ) : (
-            <TasklistFormat taskInfo={task} onTaskDeleted={onTaskDeleted} />
-          )}
-        </Box>
-      ))}
-    </Box>
+    <>
+  
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row", // column for mobile, row for desktop
+          flexWrap: isMobile ? "nowrap" : "wrap",     // no wrapping on mobile
+          justifyContent: isMobile ? "center" : "flex-start",
+          alignItems: isMobile ? "center" : "stretch",
+          marginBottom: 20
+        }}
+      >
+        {tasks.map((task) => (
+          <Box
+            key={task.id}
+            sx={{
+              flex: isMobile ? "1 1 auto" : "1 1 100%", // full width row on desktop
+              minWidth: isMobile ? 0 : 370,
+              width: isMobile ? "100%" : "auto",
+            }}
+          >
+            {isMobile ? (
+              <Task taskInfo={task} onTaskDeleted={onTaskDeleted} />
+            ) : (
+              <TasklistFormat taskInfo={task} onTaskDeleted={onTaskDeleted} />
+            )}
+          </Box>
+        ))}
+      </Box>
+
+      <Box sx={{marginBottom: "20px", height: 20}}>
+        
+      </Box>  
+    </>
+
+
   );
+
 }
 
 export default TaskList;

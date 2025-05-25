@@ -105,8 +105,9 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
             <Typography variant="caption" color="text.secondary">
               {new Date(taskInfo.updated_at).toLocaleString()}
             </Typography>
-                      {/* Status Buttons */}
-                
+
+
+                {/* Status Buttons */}
                 <Box mt={1}>
                   <ButtonGroup size="small" variant="outlined">
                     <Tooltip title="Todo">
@@ -141,7 +142,6 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
                     </Tooltip>
                   </ButtonGroup>
                 </Box>
-
 
 
           </Stack>

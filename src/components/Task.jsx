@@ -173,6 +173,7 @@ const deleteTask = async (id) => {
               {firstLetter}
             </Avatar>
           }
+          
           title={taskInfo.data.title}
           subheader={new Date(taskInfo.updated_at).toLocaleString()}
         />

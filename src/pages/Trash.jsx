@@ -107,14 +107,11 @@ function Trash() {
 
   return (
     <>
-
         
     <Box sx={{
-    minHeight: "100vh",
     width: "100%",
     background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
     display: "flex",
-    padding: 2
 
     }}>
       <NavBar />
@@ -141,6 +138,8 @@ function Trash() {
                     sx={{ flexGrow: 1 }}
                   />
 
+                    <SortByMenu onHandleSort={handleSortChange} />
+
                   <Button
                     type="submit"
                     variant="contained"
@@ -157,7 +156,6 @@ function Trash() {
                     <SearchIcon />
                   </Button>
 
-                  <SortByMenu onHandleSort={handleSortChange} />
                 </Stack>
 
             </Box>
@@ -197,8 +195,7 @@ function Trash() {
 
        <NavBarBottom onAddTaskClick={handleOpen} />
       
-
-        </Box>
+        </Box> 
     </>
   );
 }

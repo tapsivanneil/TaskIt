@@ -15,7 +15,13 @@ const statusOptions = [
 
 export default function StatusRadioGroup({ subTask, status, onStatusChange }) {
   return (
-    <ButtonGroup size="small" aria-label="status button group">
+    <ButtonGroup
+      size="small"
+      aria-label="status button group"
+      orientation="horizontal"
+      fullWidth
+      sx={{ width: { xs: "100%", sm: "100%" } }}
+    >
       {statusOptions.map(({ label, value, icon }) => (
         <Tooltip key={value} title={label}>
           <Button
@@ -23,8 +29,8 @@ export default function StatusRadioGroup({ subTask, status, onStatusChange }) {
             variant={status === value ? "contained" : "outlined"}
             color={status === value ? "primary" : "inherit"}
             startIcon={icon}
+            sx={{ flex: 1 }} // make each button expand equally
           >
-           
             {/* {label} */}
           </Button>
         </Tooltip>

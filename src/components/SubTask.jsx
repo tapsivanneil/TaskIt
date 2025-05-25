@@ -6,6 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 function SubTask({ taskInfo }) {
   const subTasks = taskInfo?.data?.subTasks || [];
@@ -62,28 +63,60 @@ function SubTask({ taskInfo }) {
   };
 
   return (
-    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%" }}>
       {subTasks.map((subTask) => (
         <ListItem
           key={subTask.id}
           divider
-          secondaryAction={
+          disableGutters
+          sx={{
+            px: 2,
+            py: 1,
+            display: "flex",
+            flexDirection: {
+              xs: "column", 
+              sm: "row",    
+            },
+            alignItems: {
+              xs: "flex-start",
+              sm: "center",
+            },
+            justifyContent: {
+              xs: "flex-start",
+              sm: "space-between", 
+            },
+
+            width: {
+              xs: "100%"
+            },
+            gap: 1,
+          }}
+        >
+          <ListItemText
+            primary={
+              <Typography
+                variant="subtitle1"
+                component="span"
+                sx={{ fontWeight: 300, fontSize: "14px" }}
+              >
+                {subTask.name}
+              </Typography>
+            }
+            sx={{
+              width: "100%",
+              mb: { xs: 1, sm: 0 },
+            }}
+          />
+
+            <Box sx={{ ml: "auto" }}>
             <StatusRadioGroup
               subTask={subTask}
               status={statuses[subTask.id]}
               onStatusChange={handleStatusChange}
             />
-          }
-          alignItems="flex-start"
-        >
-          <ListItemText
-            primary={
-              <Typography variant="subtitle1" component="span">
-                {subTask.name}
-              </Typography>
-            }
-          />
+          </Box>
         </ListItem>
+
       ))}
     </List>
   );
