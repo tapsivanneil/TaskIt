@@ -65,7 +65,7 @@ function AddSubTask({ task }) {
             required
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary" sx={{height: 60}}>
+          <Button onClick={handleAddSubTask} variant="contained" color="primary" sx={{height: 60}}>
             <DrawSharpIcon />
           </Button>
         </Stack>
