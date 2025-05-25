@@ -55,7 +55,7 @@ function AddSubTask({ task }) {
       <SubTask taskInfo={{ task }} />
 
       {/* Add subtask form */}
-      <Box component="form" onSubmit={handleAddSubTask} sx={{ mt: 3 }}>
+      <Box component="form" onSubmit={handleAddSubTask}>
         <Stack direction="row" spacing={2} alignItems="center">
           <TextField
             label="Subtask"
@@ -65,7 +65,7 @@ function AddSubTask({ task }) {
             required
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" sx={{height: 60}}>
             <DrawSharpIcon />
           </Button>
         </Stack>

@@ -29,11 +29,12 @@ function TaskImage({ imagePath }) {
       <img
         src={publicUrl}
         alt="Task"
-        style={{ maxWidth: "400px", height: "auto" }}
+        style={{ maxWidth: "400px", height: "auto", justifyContent: "center", alignItems: "center" }}
         onError={(e) => {
           console.error("Image load error", e);
           e.target.src = "/fallback.png"; // Optional fallback
         }}
+        
       />
     </>
   );

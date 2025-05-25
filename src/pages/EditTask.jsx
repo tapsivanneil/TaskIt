@@ -122,7 +122,15 @@ function EditTask() {
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" sx={{ mt: 10 }}>
+      <Container
+        maxWidth="sm"
+        sx={{
+          mt: 10,
+          height: "calc(100vh - 64px)", // Adjust this if your NavBar has a different height
+          overflowY: "auto",
+          pb: 10, // Extra space for bottom content and NavBarBottom
+        }}
+      >
         <Box
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
@@ -192,9 +200,9 @@ function EditTask() {
               </Tooltip>
             </ButtonGroup>
           </Box>
-
-          <SubTask taskInfo={taskInfo} />
           <AddSubTask task={taskInfo} />
+          <SubTask taskInfo={taskInfo} />
+
 
           {responseStatus && (
             <Typography
@@ -205,9 +213,21 @@ function EditTask() {
             </Typography>
           )}
 
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 2 }}>
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              bottom: 5,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              py: 1, // optional: vertical padding
+              zIndex: 1300, // ensures it's above other elements
+            }}
+          >
             <Button onClick={handleSubmit} variant="contained" disabled={loading}>
-              {loading ? <CircularProgress size={24} /> : "Update Task"}
+              {loading ? <CircularProgress size={24} /> : "Update"}
             </Button>
           </Box>
         </Box>
