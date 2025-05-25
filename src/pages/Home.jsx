@@ -194,10 +194,8 @@ function Home() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: { xs: "90%", sm: 400 },
-                bgcolor: "background.paper",
                 p: 4,
-                borderRadius: 2,
-                boxShadow: 24,
+                borderRadius: 10,
               }}
             >
               <AddTask

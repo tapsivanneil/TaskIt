@@ -167,16 +167,31 @@ const deleteTask = async (id) => {
 
   return (
       <Card sx={{ maxWidth: 400, m: 2 }}>
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
-              {firstLetter}
-            </Avatar>
-          }
-          
-          title={taskInfo.data.title}
-          subheader={new Date(taskInfo.updated_at).toLocaleString()}
-        />
+        <Box sx={{
+          display: "flex",
+          justifyContent: "space-between"
+        }}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
+                {firstLetter}
+              </Avatar>
+            }
+            
+            title={taskInfo.data.title}
+            subheader={new Date(taskInfo.updated_at).toLocaleString()}
+          />
+              <IconButton
+                aria-label="edit task"
+                color="primary"
+                onClick={editTask}
+                
+                sx={{mr: 2}}
+              >
+                <EditIcon />
+              </IconButton>
+          </Box>
+
         <TaskImage imagePath={taskInfo.data.image} />
         <CardContent>
           <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
@@ -257,14 +272,6 @@ const deleteTask = async (id) => {
 
           {/* Right side: Edit and Delete icons */}
           <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="edit task"
-              color="primary"
-              onClick={editTask}
-            >
-              <EditIcon />
-            </IconButton>
-
             <IconButton
               aria-label="delete task"
               color="error"
