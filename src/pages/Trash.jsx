@@ -179,7 +179,6 @@ function Trash() {
                 transform: "translate(-50%, -50%)",
                 width: { xs: "90%", sm: 400 },
                 p: 4,
-1
               }}
             >
               <AddTask
