@@ -1,9 +1,7 @@
-// src/pages/Signup.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import {
-  Container,
   Box,
   Typography,
   TextField,
@@ -11,6 +9,7 @@ import {
   Alert,
   Link as MuiLink,
   CircularProgress,
+  Paper,
 } from "@mui/material";
 
 const Signup = () => {
@@ -44,74 +43,86 @@ const Signup = () => {
   };
 
   return (
-    <Container
-      maxWidth="xs"
+    <Box
       sx={{
-        height: "100vh",             // Full viewport height
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
         display: "flex",
-        alignItems: "center",        // Vertical center
-        justifyContent: "center",    // Horizontal center
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 2,
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSignUp}
-        sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
+      <Paper
+        elevation={4}
+        sx={{
+          maxWidth: 400,
+          width: "100%",
+          padding: 4,
+          borderRadius: 3,
+          backgroundColor: "#ffffff",
+        }}
       >
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
-          Sign up today!
-        </Typography>
-
-        <TextField
-          label="Name"
-          type="text"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          fullWidth
-          autoComplete="name"
-        />
-
-        <TextField
-          label="Email"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          autoComplete="email"
-        />
-
-        <TextField
-          label="Password"
-          type="password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          autoComplete="new-password"
-        />
-
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          disabled={loading}
-          startIcon={loading && <CircularProgress size={20} />}
+        <Box
+          component="form"
+          onSubmit={handleSignUp}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
-          Sign Up
-        </Button>
+          <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
+            Sign up today!
+          </Typography>
+
+          <TextField
+            label="Name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            autoComplete="name"
+          />
+
+          <TextField
+            label="Email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            autoComplete="email"
+          />
+
+          <TextField
+            label="Password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            autoComplete="new-password"
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={loading}
+            startIcon={loading && <CircularProgress size={20} />}
+          >
+            {loading ? "Signing up..." : "Sign Up"}
+          </Button>
 
           <Typography variant="body2" textAlign="center">
-          Already have an account?{" "}
-          <MuiLink component={Link} to="/login" underline="hover">
-            Sign in
-          </MuiLink>
-        </Typography>
+            Already have an account?{" "}
+            <MuiLink component={Link} to="/login" underline="hover">
+              Sign in
+            </MuiLink>
+          </Typography>
 
-        {error && <Alert severity="error">{error}</Alert>}
-      </Box>
-    </Container>
+          {error && <Alert severity="error">{error}</Alert>}
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

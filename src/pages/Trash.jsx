@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { UserAuth } from "../context/AuthContext";
-
-// Components
 import AddTask from "../components/AddTask";
 import TaskList from "../components/TaskList";
 import NavBar from "../components/NavBar";
-import NavBarBottom from "../components/NavBarBottom";
-import SortByMenu from "../components/SortByMenu";
-
-// Icons & MUI
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
+import { Fab } from "@mui/material";
+import SortByMenu from "../components/SortByMenu";
+import SearchIcon from '@mui/icons-material/Search';
+import NavBarBottom from "../components/NavBarBottom";
+
+
 import {
   Container,
   Box,
@@ -23,32 +22,42 @@ import {
   Modal,
   Fade,
   Backdrop,
-  Typography,
 } from "@mui/material";
 
-function Home() {
+function Trash() {
   const { session } = UserAuth();
   const navigate = useNavigate();
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [searchValue, setSearchValue] = useState("");
   const [openAddTask, setOpenAddTask] = useState(false);
   const [sortType, setSortType] = useState();
   const [ascendingValue, setAscendingValue] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
-  // Navigate to login if not authenticated
+  const handleOpen = () => setOpenAddTask(true);
+  const handleClose = () => setOpenAddTask(false);
+
   useEffect(() => {
-    if (session === null) navigate("/login");
+    if (session === null) {
+      navigate("/login");
+    }
   }, [session, navigate]);
 
-  // Fetch tasks when dependencies change
   useEffect(() => {
-    if (session?.user?.id) fetchTasks();
+    if (session?.user?.id) {
+      fetchTasks();
+    }
   }, [session?.user?.id, sortType, ascendingValue, searchValue]);
 
-  // Fetch task data from Supabase
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearchValue(search.toLowerCase());
+  };
+
+//   console.log(session.user.id)
+
   const fetchTasks = async () => {
     if (!session || !session.user) return;
     setLoading(true);
@@ -58,7 +67,7 @@ function Home() {
         .from("tasks")
         .select("*")
         .eq("userid", session.user.id)
-        .filter("data->>taskStatus", "neq", "4");
+        .filter("data->>taskStatus", "eq", "4");
 
       if (sortType === "inserted_at" || sortType === "updated_at") {
         query = query.order(sortType, { ascending: ascendingValue });
@@ -87,81 +96,65 @@ function Home() {
     } finally {
       setLoading(false);
     }
+
   };
 
-  // Handle sort option
-  const handleSortChange = (type, ascending) => {
-    setSortType(type);
-    setAscendingValue(ascending);
+  const handleSortChange = (sortType, ascendingValue) => {
+    setSortType(sortType);
+    console.log(sortType)
+    setAscendingValue(ascendingValue)
   };
-
-  // Handle search form
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    setSearchValue(search.toLowerCase());
-  };
-
-  // Modal controls
-  const handleOpen = () => setOpenAddTask(true);
-  const handleClose = () => setOpenAddTask(false);
 
   return (
     <>
       <NavBar />
-
       <Container maxWidth="md" sx={{ mt: 10, mb: 10 }}>
-
         {loading ? (
           <Box display="flex" justifyContent="center" mt={4}>
             <CircularProgress />
           </Box>
-        ) : tasks.length > 0 ? (
-          <>
-            <Box component="form" onSubmit={handleSearchSubmit} sx={{ mb: 3 }}>
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
-              <TextField
-                label="Search tasks"
-                fullWidth
-                size="medium"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                sx={{ flexGrow: 1 }}
-              />
-
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  minWidth: 0,
-                  width: 90,
-                  height: 52,
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <SearchIcon />
-              </Button>
-
-              <SortByMenu onHandleSort={handleSortChange} />
-            </Stack>
-            <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
-          </Box>
-          </>
-
         ) : (
-          <Typography
-            variant="body1"
-            textAlign="center"
-            color="text.secondary"
-            mt={5}
-          >
-            No tasks found. Try creating a new one or adjust your search.
-          </Typography>
+          <div>
+            <Box component="form" onSubmit={handleSearchSubmit} sx={{ mb: 3 }}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{ mb: 3 }}
+                >
+                  <TextField
+                    label="Search tasks"
+                    fullWidth
+                    size="medium"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    sx={{ flexGrow: 1 }}
+                  />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      minWidth: 0,
+                      width: 90,
+                      height: 52,
+                      padding: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <SearchIcon />
+                  </Button>
+
+                  <SortByMenu onHandleSort={handleSortChange} />
+                </Stack>
+
+            </Box>
+            <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
+          </div>
         )}
 
-        {/* Add Task Modal */}
         <Modal
           open={openAddTask}
           onClose={handleClose}
@@ -177,10 +170,8 @@ function Home() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: { xs: "90%", sm: 400 },
-                bgcolor: "background.paper",
                 p: 4,
                 borderRadius: 2,
-                boxShadow: 24,
               }}
             >
               <AddTask
@@ -194,9 +185,12 @@ function Home() {
         </Modal>
       </Container>
 
-      <NavBarBottom onAddTaskClick={handleOpen} />
+       <NavBarBottom onAddTaskClick={handleOpen} />
+      
+
+
     </>
   );
 }
 
-export default Home;
+export default Trash;

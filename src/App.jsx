@@ -9,6 +9,8 @@ import Signup from './pages/Signup'
 import Home from './pages/Home'
 import NavBar from './components/NavBar'
 import EditTask from './pages/EditTask'
+import Trash from './pages/Trash'
+import Landing from './pages/Landing'
 
 
 function App() {
@@ -18,11 +20,12 @@ function App() {
       <>
         <main className='main-content'>
           <Routes>
-            <Route path="/" element={<Home />}/>
+            <Route path="/" element={<Landing />}/>
+            <Route path="/home" element={<Home />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/signup" element={<Signup />}/>
             <Route path="/edittask" element={<EditTask />}/>
-          
+            <Route path="/trash" element={<Trash />}/>
           </Routes>
         </main>
       

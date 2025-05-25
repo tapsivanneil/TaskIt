@@ -85,8 +85,8 @@ function AddTask({ onTaskAdded }) {
 
   return (
     <Paper elevation={3} sx={{ p: 3, mt: 4, maxWidth: 500, mx: "auto" }}>
-      <Typography variant="h6" gutterBottom>
-        Add New Task
+      <Typography variant="h6" fontWeight={800} gutterBottom>
+        New Task
       </Typography>
 
       <form onSubmit={handleSubmit}>

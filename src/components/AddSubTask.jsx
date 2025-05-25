@@ -45,7 +45,7 @@ function AddSubTask({ task }) {
     } else {
       setStatus("Subtask added!");
       setSubTask("");
-      navigate("/");
+      navigate("/home");
     }
   };
 

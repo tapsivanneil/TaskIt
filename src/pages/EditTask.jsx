@@ -20,6 +20,7 @@ import {
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import NavBarBottom from "../components/NavBarBottom";
 
 function EditTask() {
   const location = useLocation();
@@ -115,20 +116,13 @@ function EditTask() {
       setResponseStatus("Error updating task");
     } else {
       setResponseStatus("Task updated successfully!");
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
     }
   };
 
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Edit Task
-        </Typography>
-
+      <Container maxWidth="sm" sx={{ mt: 10}}>
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -177,7 +171,9 @@ function EditTask() {
                   onClick={() => setTaskStatus("todo")}
                   startIcon={<RadioButtonUncheckedIcon />}
                 >
-                  Todo
+                  <Typography sx={{ fontSize: '10px' }}>
+                      Todo
+                  </Typography>
                 </Button>
               </Tooltip>
               <Tooltip title="In Progress">
@@ -187,7 +183,9 @@ function EditTask() {
                   onClick={() => setTaskStatus("in-progress")}
                   startIcon={<HourglassEmptyIcon />}
                 >
-                  In Progress
+                  <Typography sx={{ fontSize: '10px' }}>
+                      In Progress
+                  </Typography>
                 </Button>
               </Tooltip>
               <Tooltip title="Completed">
@@ -197,21 +195,17 @@ function EditTask() {
                   onClick={() => setTaskStatus("completed")}
                   startIcon={<CheckCircleIcon />}
                 >
-                  Completed
+                  <Typography sx={{ fontSize: '10px' }}>
+                      Completed
+                  </Typography>
                 </Button>
               </Tooltip>
             </ButtonGroup>
           </Box>
 
-          <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? <CircularProgress size={24} /> : "Update Task"}
-          </Button>
         </Box>
 
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Subtasks
-          </Typography>
+        <Box sx={{ }}>
           <SubTask taskInfo={taskInfo} />
           <AddSubTask task={taskInfo} />
         </Box>
@@ -224,6 +218,16 @@ function EditTask() {
             {responseStatus}
           </Typography>
         )}
+
+
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 2, width: "100%", mb: 10 }}>
+          <Button type="submit" variant="contained" disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : "Update Task"}
+          </Button>
+        </Box>
+
+        <NavBarBottom/>
+
       </Container>
     </>
   );

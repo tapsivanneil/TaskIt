@@ -30,6 +30,10 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'; // for permanent deletion
+
+
+import { useLocation } from "react-router-dom";
 
 
 const ExpandMore = styled((props) => {
@@ -61,7 +65,6 @@ function Task({ taskInfo, onTaskDeleted }) {
   const [taskStatus, setTaskStatus] = React.useState("todo");
 
   React.useEffect(() => {
-    // Initialize local taskStatus string from taskInfo.data.taskStatus number
     const statusMap = {
       1: "todo",
       2: "in-progress",
@@ -79,12 +82,56 @@ function Task({ taskInfo, onTaskDeleted }) {
 
   const navigate = useNavigate();
 
-  const deleteTask = async (id) => {
-    const { error } = await supabase.from("tasks").delete().eq("id", id);
+const deleteTask = async (id) => {
+  // Step 1: Fetch the existing task
+  const { data: task, error: fetchError } = await supabase
+    .from("tasks")
+    .select("data")
+    .eq("id", id)
+    .single();
+
+  if (fetchError) {
+    console.error("Error fetching task before update:", fetchError);
+    return;
+  }
+
+  if (!task || !task.data) {
+    console.error("No task data found for id:", id, "Fetched task:", task);
+    return;
+  }
+
+  // Step 2: Safely update only the taskStatus
+  const updatedData = {
+    ...task.data,
+    taskStatus: 4,
+  };
+
+  // Step 3: Update the task with the modified data object
+  const { error: updateError } = await supabase
+    .from("tasks")
+    .update({ data: updatedData })
+    .eq("id", id);
+
+  if (updateError) {
+    console.error("Error updating task:", updateError);
+  } else {
+    console.log("Task updated successfully with data:", updatedData);
+    onTaskDeleted();
+  }
+};
+
+
+  const permanentDeleteTask = async (id) => {
+    const { error } = await supabase
+      .from("tasks")
+      .delete()
+      .eq("id", id);
+
     if (error) {
-      console.error("Error deleting task:", error);
+      console.error("Error permanently deleting task:", error);
     } else {
-      onTaskDeleted();
+      console.log("Task permanently deleted.");
+      onTaskDeleted(); //
     }
   };
 
@@ -136,16 +183,19 @@ function Task({ taskInfo, onTaskDeleted }) {
           </Typography>
 
           {/* Task status button group */}
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2}}>
             <ButtonGroup size="small" variant="outlined" aria-label="task status">
               <Tooltip title="Todo">
-                <Button
+                <Button 
                   color={taskStatus === "todo" ? "primary" : "inherit"}
                   variant={taskStatus === "todo" ? "contained" : "outlined"}
                   onClick={() => handleStatusChange("todo")}
                   startIcon={<RadioButtonUncheckedIcon />}
                 >
-                  Todo
+                  <Typography sx={{ fontSize: '10px' }}>
+                      Todo
+                  </Typography>
+                  
                 </Button>
               </Tooltip>
               <Tooltip title="In Progress">
@@ -155,7 +205,9 @@ function Task({ taskInfo, onTaskDeleted }) {
                   onClick={() => handleStatusChange("in-progress")}
                   startIcon={<HourglassEmptyIcon />}
                 >
-                  In Progress
+                  <Typography sx={{ fontSize: '10px' }}>
+                      In Progress
+                  </Typography>
                 </Button>
               </Tooltip>
               <Tooltip title="Completed">
@@ -165,7 +217,9 @@ function Task({ taskInfo, onTaskDeleted }) {
                   onClick={() => handleStatusChange("completed")}
                   startIcon={<CheckCircleIcon />}
                 >
-                  Completed
+                  <Typography sx={{ fontSize: '10px' }}>
+                      Completed
+                  </Typography>
                 </Button>
               </Tooltip>
             </ButtonGroup>
@@ -213,9 +267,25 @@ function Task({ taskInfo, onTaskDeleted }) {
             <IconButton
               aria-label="delete task"
               color="error"
-              onClick={() => deleteTask(taskInfo.id)}
+              onClick={() => {
+                if (location.pathname === "/home") {
+                  deleteTask(taskInfo.id);
+                } else if (location.pathname === "/trash") {
+                  permanentDeleteTask(taskInfo.id);
+                }
+              }}
             >
-              <DeleteIcon />
+              {location.pathname === "/home" ? (
+                <DeleteIcon
+                  onClick={() => deleteTask(taskInfo.id)}
+                  sx={{ cursor: "pointer" }}
+                />
+              ) : (
+                <DeleteForeverIcon
+                  onClick={() => permanentDeleteTask(taskInfo.id)}
+                  sx={{ cursor: "pointer" }}
+                />
+              )}
             </IconButton>
           </Stack>
         </Stack>

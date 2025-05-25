@@ -9,6 +9,7 @@ import {
   Button,
   Alert,
   Link as MuiLink,
+  Paper,
 } from "@mui/material";
 
 const Login = () => {
@@ -25,11 +26,9 @@ const Login = () => {
 
     if (error) {
       setError(error);
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+      setTimeout(() => setError(""), 3000);
     } else {
-      navigate("/");
+      navigate("/home");
     }
 
     if (session) {
@@ -38,60 +37,71 @@ const Login = () => {
   };
 
   return (
-    <Container
-      maxWidth="xs"
+    <Box
       sx={{
-        height: "100vh",            // full viewport height
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
         display: "flex",
-        alignItems: "center",       // vertical center
-        justifyContent: "center",   // horizontal center
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 2,
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSignIn}
-        sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
+      <Paper
+        elevation={4}
+        sx={{
+          maxWidth: 400,
+          width: "100%",
+          padding: 4,
+          borderRadius: 3,
+          backgroundColor: "#ffffff",
+        }}
       >
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
-          Log in
-        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSignIn}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
+            Welcome Back
+          </Typography>
 
-        <TextField
-          label="Email"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          autoComplete="email"
-        />
+          <TextField
+            label="Email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            autoComplete="email"
+          />
 
-        <TextField
-          label="Password"
-          type="password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          autoComplete="current-password"
-        />
+          <TextField
+            label="Password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            autoComplete="current-password"
+          />
 
-        <Button variant="contained" type="submit" fullWidth>
-          Sign In
-        </Button>
+          <Button variant="contained" type="submit" fullWidth sx={{ mt: 1 }}>
+            Log in
+          </Button>
 
-        <Typography variant="body2" textAlign="center">
-          Don't have an account yet?{" "}
-          <MuiLink component={Link} to="/signup" underline="hover">
-            Sign up
-          </MuiLink>
-        </Typography>
+          <Typography variant="body2" textAlign="center" sx={{ mt: 1 }}>
+            Don't have an account?{" "}
+            <MuiLink component={Link} to="/signup" underline="hover">
+              Sign up
+            </MuiLink>
+          </Typography>
 
-        {error && <Alert severity="error">{error}</Alert>}
-      </Box>
-    </Container>
+          {error && <Alert severity="error">{error}</Alert>}
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
 export default Login;
-

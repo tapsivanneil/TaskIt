@@ -61,14 +61,6 @@ function SubTask({ taskInfo }) {
     }
   };
 
-  if (subTasks.length === 0) {
-    return (
-      <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic" }}>
-        No subtasks found
-      </Typography>
-    );
-  }
-
   return (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       {subTasks.map((subTask) => (

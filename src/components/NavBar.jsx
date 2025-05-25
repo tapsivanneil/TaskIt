@@ -45,12 +45,12 @@ function NavBar() {
   };
 
   const handleHomeClick = () => {
-    navigate("/");
+    navigate("/home");
     handleMenuClose();
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="fixed" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* User email - hide on mobile to save space */}
         {!isMobile && (
@@ -65,7 +65,8 @@ function NavBar() {
           onClick={handleHomeClick}
           sx={{ cursor: "pointer", flexGrow: 1, textAlign: "center" }}
         >
-          TaskIt
+        
+           TaskIt
         </Typography>
 
         {isMobile ? (
