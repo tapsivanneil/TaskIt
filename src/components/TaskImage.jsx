@@ -31,7 +31,7 @@ function TaskImage({ imagePath }) {
         alt="Task"
         style={{
         width: "100%",
-        height: "400px",
+        height: "200px",
         overflow: "hidden",
         display: "flex",
         justifyContent: "center",

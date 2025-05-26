@@ -147,7 +147,14 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
             {taskInfo.data.description}
           </Typography>
 
-          {/* Expand Subtasks & Actions */}
+  
+
+          <Collapse in={!expanded} timeout="auto" unmountOnExit>
+            <Box mt={2}>
+              <SubTask taskInfo={taskInfo} />
+            </Box>
+          </Collapse>
+
           <Stack direction="row" justifyContent="space-between" alignItems="center" mt={2}>
             <Button
               size="small"
@@ -155,13 +162,13 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
               endIcon={
                 <ExpandMoreIcon
                   sx={{
-                    transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                    transform: expanded ? "rotate(0deg)" : "rotate(180deg)",
                     transition: "0.3s",
                   }}
                 />
               }
             >
-              {expanded ? "Hide Subtasks" : "Show Subtasks"}
+              {expanded ? "Show Subtasks" : "Hide Subtasks"}
             </Button>
 
             <Stack direction="row" spacing={1}>
@@ -181,12 +188,7 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
             </Stack>
           </Stack>
 
-          {/* SubTasks */}
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Box mt={2}>
-              <SubTask taskInfo={taskInfo} />
-            </Box>
-          </Collapse>
+
         </Box>
       </Stack>
       <Divider sx={{ mt: 2 }} />
