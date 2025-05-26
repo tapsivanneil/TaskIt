@@ -30,9 +30,8 @@ function TaskImage({ imagePath }) {
         src={publicUrl}
         alt="Task"
         style={{
-        maxWidth: "400px",
         width: "100%",
-        height: "200px",
+        height: "400px",
         overflow: "hidden",
         display: "flex",
         justifyContent: "center",

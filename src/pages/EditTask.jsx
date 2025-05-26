@@ -216,17 +216,16 @@ function EditTask() {
           <Box
             sx={{
               position: "fixed",
-              bottom: 0,
               left: 0,
-              bottom: 5,
+              bottom: 48,
               width: "100%",
               display: "flex",
               justifyContent: "center",
               py: 1, // optional: vertical padding
-              zIndex: 1300, // ensures it's above other elements
+              zIndex: 1300
             }}
           >
-            <Button onClick={handleSubmit} variant="contained" disabled={loading}>
+            <Button onClick={handleSubmit} variant="contained" disabled={loading} sx={{width: "100%", maxWidth: "560px"}}>
               {loading ? <CircularProgress size={24} /> : "Update"}
             </Button>
           </Box>
