@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import {
   AppBar,
   Toolbar,
@@ -63,7 +64,7 @@ function NavBar() {
         <Typography
           variant="h6"
           onClick={handleHomeClick}
-          sx={{ cursor: "pointer", flexGrow: 1, textAlign: "center" }}
+          sx={{ cursor: "pointer", flexGrow: 1, textAlign: "center", ml: isMobile? 4 : -5 }}
         >
         
            TaskIt

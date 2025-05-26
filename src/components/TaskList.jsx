@@ -29,8 +29,10 @@ function TaskList({ tasks, onTaskDeleted }) {
             key={task.id}
             sx={{
               flex: isMobile ? "1 1 auto" : "1 1 100%", // full width row on desktop
-              minWidth: isMobile ? 0 : 370,
+              minWidth: isMobile ? 370 : 370,
               width: isMobile ? "100%" : "auto",
+              margin: 'auto',
+              marginBottom: 2
             }}
           >
             {isMobile ? (

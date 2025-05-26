@@ -13,6 +13,7 @@ import SortByMenu from "../components/SortByMenu";
 // Icons & MUI
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import { useMediaQuery, useTheme } from "@mui/material";
 import {
   Container,
   Box,
@@ -37,6 +38,10 @@ function Home() {
   const [openAddTask, setOpenAddTask] = useState(false);
   const [sortType, setSortType] = useState();
   const [ascendingValue, setAscendingValue] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // sm = 600px and below
+
 
   // Navigate to login if not authenticated
   useEffect(() => {
@@ -116,19 +121,30 @@ function Home() {
 
       <NavBar />
 
-      <Container maxWidth="md" sx={{ 
-        mt: 10,
-        mb: 10, 
-      }}>
+        <Container
+          maxWidth="md"
+          sx={{
+            mt: 10,
+            mb: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            p: -2
+          }}
+        >
         {loading ? (
-          <Box display="flex" justifyContent="center" mt={4}>
+          <Box display="flex" justifyContent="center" alignItems="center" mt={4}>
             <CircularProgress />
           </Box>
         ) : tasks.length > 0 ? (
           <>
-            <Box component="form" onSubmit={handleSearchSubmit} sx={{ mb: 3 }}>
+            <Box
+              component="form"
+              onSubmit={handleSearchSubmit}
+              sx={{ width: "100%", maxWidth: "700px" }}
+            >
               
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
+            <Stack direction="row" spacing={2} alignItems="center" sx={{ width: isMobile? "90%": "100%", mb: 2, bgcolor: "white", px: 2, py: 2, boxShadow: 5, borderRadius: 2, marginLeft: isMobile? 0: 0  }}>
               <TextField
                 label="Search tasks"
                 fullWidth
@@ -137,7 +153,6 @@ function Home() {
                 onChange={(e) => setSearch(e.target.value)}
                 sx={{ flexGrow: 1 }}
               />
-
 
               <SortByMenu onHandleSort={handleSortChange} />
 

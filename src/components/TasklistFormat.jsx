@@ -87,9 +87,8 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
   };
 
   return (
-    <Box sx={{ width: "100%", py: 2 }}>
+    <Box sx={{ width: "100%", py: 3, backgroundColor: "white", borderRadius: 2, px: 2, boxShadow: 5, justifyContent: "center", alignItems: "center"}}>
       <Stack direction="row" spacing={2} alignItems="flex-start" width="100%">
-        {/* Left: Task Image (if any) */}
         {taskInfo.data.image ? (
           <Box sx={{ width: 100, height: 100, flexShrink: 0 }}>
             <TaskImageList imagePath={taskInfo.data.image} />
@@ -98,7 +97,6 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
           <Box sx={{ width: 100, height: 100, backgroundColor: "#f0f0f0", flexShrink: 0 }} />
         )}
 
-        {/* Right: Text & Actions */}
         <Box flex={1}>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="h6">{taskInfo.data.title}</Typography>
@@ -142,7 +140,6 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
                     </Tooltip>
                   </ButtonGroup>
                 </Box>
-
 
           </Stack>
 
