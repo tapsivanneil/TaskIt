@@ -52,7 +52,10 @@ function NavBar() {
 
   return (
     <AppBar position="fixed" color="primary">
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+      <Toolbar sx={{ justifyContent: "space-between", 
+          background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #90caf9 100%)",
+
+      }}>
         {!isMobile && (
           <Typography sx={{ mr: 2 }}>
             {session?.user?.email}

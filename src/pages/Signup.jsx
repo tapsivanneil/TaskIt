@@ -61,7 +61,7 @@ const Signup = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(to right, #f9f9f9, #e0f7fa)",
+        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #90caf9 100%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

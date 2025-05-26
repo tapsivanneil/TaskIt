@@ -6,11 +6,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete"; // MUI delete icon
 
 function SubTask({ taskInfo }) {
   const subTasks = taskInfo?.data?.subTasks || [];
   const [statuses, setStatuses] = useState({});
+  const [localSubTasks, setLocalSubTasks] = useState(subTasks); // new local state
 
   useEffect(() => {
     const initialStatuses = {};
@@ -21,6 +23,7 @@ function SubTask({ taskInfo }) {
       initialStatuses[st.id] = statusStr;
     });
     setStatuses(initialStatuses);
+    setLocalSubTasks(subTasks); // reset localSubTasks when taskInfo updates
   }, [taskInfo]);
 
   const handleStatusChange = async (subTaskId, newStatus) => {
@@ -35,7 +38,7 @@ function SubTask({ taskInfo }) {
       completed: 3,
     };
 
-    const updatedSubTasks = subTasks.map((subTask) => {
+    const updatedSubTasks = localSubTasks.map((subTask) => {
       if (subTask.id === subTaskId) {
         return {
           ...subTask,
@@ -62,9 +65,33 @@ function SubTask({ taskInfo }) {
     }
   };
 
+  const handleDeleteSubTask = async (subTaskId) => {
+    const updatedSubTasks = localSubTasks.filter((st) => st.id !== subTaskId);
+
+    const updatedTaskData = {
+      ...taskInfo.data,
+      subTasks: updatedSubTasks,
+    };
+
+    const { error } = await supabase
+      .from("tasks")
+      .update({ data: updatedTaskData })
+      .eq("id", taskInfo.id);
+
+    if (error) {
+      console.error("Error deleting subtask:", error);
+    } else {
+      setLocalSubTasks(updatedSubTasks);
+      const updatedStatuses = { ...statuses };
+      delete updatedStatuses[subTaskId];
+      setStatuses(updatedStatuses);
+      console.log("Subtask deleted successfully");
+    }
+  };
+
   return (
     <List sx={{ width: "100%" }}>
-      {subTasks.map((subTask) => (
+      {localSubTasks.map((subTask) => (
         <ListItem
           key={subTask.id}
           divider
@@ -74,8 +101,8 @@ function SubTask({ taskInfo }) {
             py: 1,
             display: "flex",
             flexDirection: {
-              xs: "column", 
-              sm: "row",    
+              xs: "column",
+              sm: "row",
             },
             alignItems: {
               xs: "flex-start",
@@ -83,11 +110,10 @@ function SubTask({ taskInfo }) {
             },
             justifyContent: {
               xs: "flex-start",
-              sm: "space-between", 
+              sm: "space-between",
             },
-
             width: {
-              xs: "100%"
+              xs: "100%",
             },
           }}
         >
@@ -96,7 +122,12 @@ function SubTask({ taskInfo }) {
               <Typography
                 variant="subtitle1"
                 component="span"
-                sx={{ fontWeight: 300, fontSize: "14px" }}
+                sx={{
+                  fontWeight: 300,
+                  fontSize: "14px",
+                  textDecoration:
+                    statuses[subTask.id] === "completed" ? "line-through" : "none",
+                }}
               >
                 {subTask.name}
               </Typography>
@@ -107,15 +138,22 @@ function SubTask({ taskInfo }) {
             }}
           />
 
-            <Box sx={{ ml: "auto" }}>
+          <Box sx={{ display: "flex", alignItems: "center", ml: "auto" }}>
             <StatusRadioGroup
               subTask={subTask}
               status={statuses[subTask.id]}
               onStatusChange={handleStatusChange}
             />
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleDeleteSubTask(subTask.id)}
+              size="small"
+              sx={{ ml: 1 }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
           </Box>
         </ListItem>
-
       ))}
     </List>
   );
