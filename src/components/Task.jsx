@@ -198,7 +198,6 @@ const deleteTask = async (id) => {
             {taskInfo.data.description}
           </Typography>
 
-          {/* Task status button group */}
           <Box sx={{ display: "flex", justifyContent: "center", mb: 2}}>
             <ButtonGroup size="small" variant="outlined" aria-label="task status">
               <Tooltip title="Todo">
@@ -270,7 +269,6 @@ const deleteTask = async (id) => {
             {expanded ? "Hide Subtasks" : "Show Subtasks"}
           </Button>
 
-          {/* Right side: Edit and Delete icons */}
           <Stack direction="row" spacing={1}>
             <IconButton
               aria-label="delete task"

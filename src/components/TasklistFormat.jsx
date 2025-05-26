@@ -104,8 +104,6 @@ function TasklistFormat({ taskInfo, onTaskDeleted }) {
               {new Date(taskInfo.updated_at).toLocaleString()}
             </Typography>
 
-
-                {/* Status Buttons */}
                 <Box mt={1}>
                   <ButtonGroup size="small" variant="outlined">
                     <Tooltip title="Todo">

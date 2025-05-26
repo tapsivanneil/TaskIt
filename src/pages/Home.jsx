@@ -189,8 +189,7 @@ function Home() {
             No tasks found. Try creating a new one or adjust your search.
           </Typography>
         )}
-
-        {/* Add Task Modal */}
+        
         <Modal
           open={openAddTask}
           onClose={handleClose}

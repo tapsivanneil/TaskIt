@@ -51,10 +51,10 @@ function AddSubTask({ task }) {
 
   return (
     <>
-      {/* Display existing subtasks */}
+
       <SubTask taskInfo={{ task }} />
 
-      {/* Add subtask form */}
+
       <Box component="form" onSubmit={handleAddSubTask}>
         <Stack direction="row" spacing={2} alignItems="center">
           <TextField

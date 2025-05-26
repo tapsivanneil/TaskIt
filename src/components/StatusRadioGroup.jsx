@@ -31,7 +31,6 @@ export default function StatusRadioGroup({ subTask, status, onStatusChange }) {
             startIcon={icon}
             sx={{ flex: 1 }} // make each button expand equally
           >
-            {/* {label} */}
           </Button>
         </Tooltip>
       ))}

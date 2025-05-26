@@ -53,14 +53,12 @@ function NavBar() {
   return (
     <AppBar position="fixed" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* User email - hide on mobile to save space */}
         {!isMobile && (
           <Typography sx={{ mr: 2 }}>
             {session?.user?.email}
           </Typography>
         )}
-
-        {/* App title */}
+        
         <Typography
           variant="h6"
           onClick={handleHomeClick}

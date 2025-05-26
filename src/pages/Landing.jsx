@@ -23,7 +23,6 @@ function Landing() {
     <>
       <CssBaseline />
 
-      {/* Header */}
       <AppBar position="static" color="primary">
         <Toolbar>
           <TaskIcon sx={{ mr: 1 }} />
@@ -36,7 +35,6 @@ function Landing() {
         </Toolbar>
       </AppBar>
 
-      {/* Hero Section */}
       <Box
         sx={{
           bgcolor: "primary.main",
@@ -63,7 +61,6 @@ function Landing() {
         </Container>
       </Box>
 
-      {/* Features Section */}
       <Container sx={{ my: 8 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Why TaskIt?
@@ -107,7 +104,6 @@ function Landing() {
         </Grid>
       </Container>
 
-      {/* Footer */}
       <Box
         sx={{
           bgcolor: "grey.900",
