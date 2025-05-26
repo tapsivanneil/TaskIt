@@ -174,11 +174,8 @@ function Home() {
 
               
             </Stack>
-            <Box sx={{mb: 10, justifyContent: "center", alignItems: "center", margin: "auto"}}>
-              <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
-            </Box>
+            <TaskList tasks={tasks} onTaskDeleted={fetchTasks} />
 
-            
           </Box>
           </>
 
