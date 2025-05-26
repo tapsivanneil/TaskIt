@@ -166,7 +166,7 @@ const deleteTask = async (id) => {
   };
 
   return (
-      <Card sx={{ maxWidth: 400, m: 2 }}>
+      <Card sx={{ maxWidth: "auto", m: 2 }}>
         <Box sx={{
           display: "flex",
           justifyContent: "space-between"
