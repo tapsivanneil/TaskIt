@@ -10,8 +10,13 @@ import {
   Alert,
   Link as MuiLink,
   CircularProgress,
+  AppBar,
+  Toolbar,
   Paper,
 } from "@mui/material";
+
+import TaskIcon from "@mui/icons-material/Task";
+
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -57,6 +62,10 @@ const Signup = () => {
       }
     };
 
+    const handleHomeClick = () => {
+    navigate("/");
+    };
+
   return (
     <Box
       sx={{
@@ -68,6 +77,16 @@ const Signup = () => {
         padding: 2,
       }}
     >
+
+          <AppBar position="fixed" sx={{backgroundColor: "transparent", boxShadow: 0}}>
+          <Toolbar>
+            <TaskIcon sx={{ mr: 1 }} />
+            <Typography variant="h6" component="div" onClick={handleHomeClick} sx={{ flexGrow: 1 } }>
+              TaskIt
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
       <Paper
         elevation={4}
         sx={{
